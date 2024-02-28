@@ -4,7 +4,7 @@ A little exercise to build a web application following an agile development proc
 
 ## Product vision statement
 
-See instructions. Delete this line and place the Product Vision Statement here.
+MoodMap aims to create emotional awareness through a comprehensive tracker that categorizes emotions into detailed subcategories, enabling users to monitor trends and foster personal growth on a daily and weekly basis.
 
 ## User stories
 
