@@ -49,7 +49,7 @@ def sign_in():
     email = request.form.get('email')
     password = request.form.get('password')
     if not all([email, password]):
-        return jsonify({'message': 'Missing fields'}), 400
+        error_message = 'Missing fields'
     
     user = db.users.find_one({"email": email})
 
@@ -57,7 +57,9 @@ def sign_in():
         #Check session stuff
         return redirect(url_for('home'))
     else:
-        return jsonify({'message': 'Incorrect Password'}), 400
+        error_message = 'Incorrect Password'
+
+    return render_template("sign_in.html", error=error_message)
 
 
 
@@ -73,10 +75,10 @@ def sign_up():
     full_name = request.form.get('full_name')
 
     if not all([email, password, full_name]):
-        return jsonify({'message': 'Missing fields'}), 400
+        error_message = "Missing Fields"
 
     if db.users.find_one({"email": email}):
-        return jsonify({'message': 'Email already in use'}), 400
+        error_message = "Email in use"
 
     #maybe hash it 
     db.users.insert_one({
@@ -84,10 +86,16 @@ def sign_up():
         "password": password,
         "full_name": full_name
     })
+
+    if error_message:
+        return render_template("sign_up.html", error=error_message)
+    else: 
+        return redirect("index.html")
+
+
     
 
 
-    return redirect(url_for('home'))
 
 
 
