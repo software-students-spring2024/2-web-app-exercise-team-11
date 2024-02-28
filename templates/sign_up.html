@@ -1,0 +1,18 @@
+<head>
+    <title>Signup Page!</title>
+    <link rel="stylesheet" type="text/css" href="../static/style.css">
+</head>
+<div class="container">
+
+    <h2>Signup</h2>
+    <form method="POST" action="{{ url_for('sign_up') }}">
+        <label for="full_name">Full Name:</label><br>
+        <input type="text" id="full_name" name="full_name"><br><br>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email"><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password"><br>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+
