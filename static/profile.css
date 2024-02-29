@@ -10,7 +10,7 @@ body {
 
 .profile-container {
     text-align: center;
-    background-color: #fff; /* Background color for the profile container */
+    background-color: #fff; 
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -18,7 +18,7 @@ body {
 }
 
 .profile-picture {
-    background-color: #d9d9d9; /* Placeholder color for profile picture */
+    background-color: #d9d9d9; 
     width: 150px;
     height: 150px;
     border-radius: 50%;
@@ -36,29 +36,29 @@ body {
 
 
 .profile-actions {
-    display: flex; /* Enables flexbox */
-    flex-direction: column; /* Stacks items vertically */
-    align-items: center; /* Centers items horizontally */
-    padding: 10px; /* Adds some padding around the container */
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    padding: 10px; 
 }
 
 .profile-actions button {
-    background-color: #4CAF50; /* Green background */
+    background-color: #4CAF50; 
     border: none;
-    color: white; /* White text */
-    padding: 10px 20px; /* Top and bottom padding, Left and right padding */
+    color: white; 
+    padding: 10px 20px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px; /* Text size */
-    margin: 4px 0px; /* Vertical margin */
+    font-size: 16px; 
+    margin: 4px 0px; 
     cursor: pointer;
-    border-radius: 20px; /* Rounded corners */
-    transition-duration: 0.4s; /* Transition effect */
-    width: 80%; /* Sets a specific width for the buttons */
+    border-radius: 20px; 
+    transition-duration: 0.4s; 
+    width: 80%;
 }
 
 .profile-actions button:hover {
-    background-color: #45a049; /* Darker shade of green */
+    background-color: #45a049; 
     color: white;
 }
