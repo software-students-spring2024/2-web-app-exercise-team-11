@@ -1,6 +1,6 @@
 import os
 import datetime
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, redirect, url_for, jsonify, session
 
 import pymongo
 from bson.objectid import ObjectId
@@ -13,9 +13,13 @@ load_dotenv()  # take environment variables from .env.
 app = Flask(__name__)
 
 
+
+
 # connect to the database
 cxn = pymongo.MongoClient(os.getenv("MONGO_URI"))
-db = cxn[os.getenv("MONGO_DBNAME")]  # store a reference to the database
+db = cxn[os.getenv("MONGO_DBNAME")]
+app.secret_key = os.environ.get('SECRET_KEY', 'default_secret_key')
+
 
 
 @app.route("/")
@@ -23,7 +27,9 @@ def home():
     """
     Route for the home page
     """
-    return render_template("index.html")
+    if 'email' in session:
+        return render_template("index.html", logged_in=True)
+    return render_template("index.html", logged_in=False)
 
 
 @app.route('/sign_up')
@@ -40,6 +46,15 @@ def show_signin():
     """
     return render_template("sign_in.html")
 
+@app.route('/profile')
+def profile():
+    if 'email' in session:
+        user = db.users.find_one({"email": session['email']})
+        return render_template('profile.html', user=user)
+    else:
+        return redirect(url_for('show_signin'))
+
+
 @app.route("/sign_in", methods=["POST"])
 def sign_in():
     """
@@ -49,17 +64,17 @@ def sign_in():
     email = request.form.get('email')
     password = request.form.get('password')
     if not all([email, password]):
-        error_message = 'Missing fields'
+        return redirect(url_for('show_signin'))
     
     user = db.users.find_one({"email": email})
 
-    if user and user['password'] == password:
-        #Check session stuff
+    
+    if user and user.get('password') == password:
+        session['email'] = user['email']
         return redirect(url_for('home'))
     else:
-        error_message = 'Incorrect Password'
+        return redirect(url_for('show_signin'))
 
-    return render_template("sign_in.html", error=error_message)
 
 
 
@@ -69,6 +84,8 @@ def sign_up():
     """
     Post route for user creation of their user
     """
+
+    error_message = ""
 
     email = request.form.get('email')
     password = request.form.get('password')
@@ -90,20 +107,34 @@ def sign_up():
     if error_message:
         return render_template("sign_up.html", error=error_message)
     else: 
-        return redirect("index.html")
+        return redirect(url_for('home'))
 
 
     
+@app.route('/logout')
+def logout():
+    """
+    User logout route
+    """
+    session.pop('email', None)
+    return redirect(url_for('home'))
 
-
-
-
+@app.route('/delete_profile', methods=['POST'])
+def delete_profile():
+    """
+    Route to delete the current user's profile
+    """
+    if 'email' in session:
+        email = session['email']
+        db.users.delete_one({'email': email})
+        session.pop('email', None)  
+        return redirect(url_for('home'))
+    else:
+        return redirect(url_for('home'))
 
 
 if __name__ == "__main__":
-    # use the PORT environment variable, or default to 5000
     FLASK_PORT = os.getenv("FLASK_PORT", "5000")
 
-    # import logging
-    # logging.basicConfig(filename='/home/ak8257/error.log',level=logging.DEBUG)
+  
     app.run(port=FLASK_PORT)
