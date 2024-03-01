@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Assessment Page</title>
+    <link rel="stylesheet" type="text/css" href="../static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>How Are You Feeling Right Now?</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Angry</th>
+                    <th>Sad</th>
+                    <th>Anxious</th>
+                    <th>Hurt</th>
+                    <th>Embarrassed</th>
+                    <th>Happy</th>
+                </tr>
+            </thead>
+        </table>
+        
+        <form method="POST" action="">
+            <label for="How Are You Feeling Right Now?">Input:</label><br>
+            <input type="Input"><br>
+            <input type="submit" value="Submit">
+        </form>
+
+        
+    </div>
+    {% if error %}
+        <div class="error-message">{{ error }}</div>
+    {% endif %}
+
+
+</body>
+</html>
