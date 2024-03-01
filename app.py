@@ -138,6 +138,27 @@ def delete_profile():
         return redirect(url_for('home'))
 
 
+
+@app.route('/assessment')
+def assessment():
+    """
+    Route to input mood assessment
+    """
+    return render_template("assessment.html")
+
+
+## Based On Input From /assessment, assessment_further displays a different version of a template
+##@app.route('/assessment_further')
+##def assessment():
+    ##"""
+    ##Route to input mood assessment
+    ##"""
+    ##return redirect(url_for('assessment'))
+
+
+
+
+
 if __name__ == "__main__":
     FLASK_PORT = os.getenv("FLASK_PORT", "5000")
 
