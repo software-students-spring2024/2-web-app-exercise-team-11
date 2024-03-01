@@ -9,10 +9,16 @@ body, html {
     flex-direction: column;
 }
 
-header {
+header, .description {
     text-align: center;
     width: 100%;
     padding: 20px 0; 
+}
+
+.description {
+    max-width: 400px;
+    margin: 0 auto;
+    display: block;
 }
 
 #account-actions {
