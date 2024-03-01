@@ -71,7 +71,7 @@ def sign_in():
 
         if bcrypt.checkpw(password, hashed_password):
             session['email'] = user['email']
-            return redirect(url_for('home'))
+            return redirect(url_for('assessment'))
         else:
             return redirect(url_for('show_signin'))
     else:
@@ -113,7 +113,7 @@ def sign_up():
         "full_name": full_name
     })
 
-    return redirect(url_for('home'))
+    return redirect(url_for('assessment'))
 
     
 @app.route('/logout')
