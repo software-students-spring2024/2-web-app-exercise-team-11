@@ -1,8 +1,8 @@
 import os
 import datetime
-from flask import Flask, render_template, request, redirect, url_for, jsonify
-
+from flask import Flask, render_template, request, redirect, url_for, jsonify, session
 import pymongo
+import bcrypt
 from bson.objectid import ObjectId
 from dotenv import load_dotenv
 
@@ -11,11 +11,17 @@ load_dotenv()  # take environment variables from .env.
 
 # instantiate the app
 app = Flask(__name__)
+# bcrypt = Bcrypt(app) 
+
+
+
 
 
 # connect to the database
 cxn = pymongo.MongoClient(os.getenv("MONGO_URI"))
-db = cxn[os.getenv("MONGO_DBNAME")]  # store a reference to the database
+db = cxn[os.getenv("MONGO_DBNAME")]
+app.secret_key = os.environ.get('SECRET_KEY', 'default_secret_key')
+
 
 
 @app.route("/")
@@ -23,7 +29,9 @@ def home():
     """
     Route for the home page
     """
-    return render_template("index.html")
+    if 'email' in session:
+        return render_template("index.html", logged_in=True)
+    return render_template("index.html", logged_in=False)
 
 
 @app.route('/sign_up')
@@ -40,26 +48,35 @@ def show_signin():
     """
     return render_template("sign_in.html")
 
+@app.route('/profile')
+def profile():
+    if 'email' in session:
+        user = db.users.find_one({"email": session['email']})
+        return render_template('profile.html', user=user)
+    else:
+        return redirect(url_for('show_signin'))
+
+
 @app.route("/sign_in", methods=["POST"])
 def sign_in():
-    """
-    User sign in route
-    """
-
     email = request.form.get('email')
-    password = request.form.get('password')
+    password = request.form.get('password').encode('utf-8') 
+
     if not all([email, password]):
-        error_message = 'Missing fields'
+        return redirect(url_for('show_signin'))
     
     user = db.users.find_one({"email": email})
+    if user:
+        hashed_password = user.get('password')
 
-    if user and user['password'] == password:
-        #Check session stuff
-        return redirect(url_for('home'))
+        if bcrypt.checkpw(password, hashed_password):
+            session['email'] = user['email']
+            return redirect(url_for('home'))
+        else:
+            return redirect(url_for('show_signin'))
     else:
-        error_message = 'Incorrect Password'
+        return redirect(url_for('show_signin'))
 
-    return render_template("sign_in.html", error=error_message)
 
 
 
@@ -74,36 +91,55 @@ def sign_up():
     password = request.form.get('password')
     full_name = request.form.get('full_name')
 
+    if password is not None:
+        password_bytes = password.encode('utf-8')
+    else:
+        error_message = "Missing password"
+        return render_template("sign_up.html", error=error_message)
+
     if not all([email, password, full_name]):
         error_message = "Missing Fields"
+        return render_template("sign_up.html", error=error_message)
 
     if db.users.find_one({"email": email}):
-        error_message = "Email in use"
+        error_message = "Email already in use"
+        return render_template("sign_up.html", error=error_message)
 
-    #maybe hash it 
+    hashed = bcrypt.hashpw(password_bytes, bcrypt.gensalt())
+
     db.users.insert_one({
         "email": email,
-        "password": password,
+        "password": hashed, 
         "full_name": full_name
     })
 
-    if error_message:
-        return render_template("sign_up.html", error=error_message)
-    else: 
-        return redirect("index.html")
-
+    return redirect(url_for('home'))
 
     
+@app.route('/logout')
+def logout():
+    """
+    User logout route
+    """
+    session.pop('email', None)
+    return redirect(url_for('home'))
 
-
-
-
+@app.route('/delete_profile', methods=['POST'])
+def delete_profile():
+    """
+    Route to delete the current user's profile
+    """
+    if 'email' in session:
+        email = session['email']
+        db.users.delete_one({'email': email})
+        session.pop('email', None)  
+        return redirect(url_for('home'))
+    else:
+        return redirect(url_for('home'))
 
 
 if __name__ == "__main__":
-    # use the PORT environment variable, or default to 5000
     FLASK_PORT = os.getenv("FLASK_PORT", "5000")
 
-    # import logging
-    # logging.basicConfig(filename='/home/ak8257/error.log',level=logging.DEBUG)
+  
     app.run(port=FLASK_PORT)

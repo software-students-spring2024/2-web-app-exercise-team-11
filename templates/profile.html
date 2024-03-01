@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Profile</title>
+    <link rel="stylesheet" type="text/css" href="../static/profile.css"> 
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-picture">
+            <!-- <img src="../images/profile.jpeg" alt="Profile Picture"> -->
+        </div>
+        <div class="profile-actions">
+            <form action="/delete_profile" method="POST">
+                <button type="submit">Delete Account</button>
+            </form>          
+            <button onclick="location.href='/change_password'">Change Password</button>
+            <button onclick="location.href='/view_assessments'">View Old Assessment Results</button>
+        </div>
+    </div>
+</body>
+</html>
