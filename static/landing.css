@@ -1,0 +1,96 @@
+body, html {
+    font-family: Arial, sans-serif;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-start; 
+    align-items: center;
+    flex-direction: column;
+}
+
+header {
+    text-align: center;
+    width: 100%;
+    padding: 20px 0; 
+}
+
+#emotion-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: calc(100% - 60px); 
+    width: 100%;
+    flex-grow: 1;
+}
+
+
+#main-emotions {
+    display: flex;
+    justify-content: center;
+    gap: 10px; 
+    flex-wrap: wrap; 
+    margin-bottom: 20px;
+}
+
+.emotion-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    font-size: 16px;
+}
+
+
+.emotion-btn[data-emotion="Angry"] { background-color: #E53E3E; }
+.emotion-btn[data-emotion="Sad"] { background-color: #3182CE; }
+.emotion-btn[data-emotion="Anxious"] { background-color: #DD6B20; }
+.emotion-btn[data-emotion="Hurt"] { background-color: #805AD5; }
+.emotion-btn[data-emotion="Embarrassed"] { background-color: #D69E2E; }
+.emotion-btn[data-emotion="Happy"] { background-color: #38A169; }
+
+#sub-emotions {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; 
+    margin-top: 20px; 
+}
+
+.sub-emotion-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #CBD5E0; 
+    color: black;
+    font-size: 14px;
+}
+
+.sub-emotion-btn.selected {
+    background-color: #A0AEC0; 
+}
+
+
+#submit-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #4A5568; 
+    color: white;
+    font-size: 16px;
+}
+
+.emotion-btn.selected {
+    opacity: .75; /
+}
+
+button:disabled {
+    cursor: default;
+    opacity: 0.7; 
+}
+
+

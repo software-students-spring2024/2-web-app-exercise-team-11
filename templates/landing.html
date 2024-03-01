@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='landing.css') }}">
+    <script defer src="{{ url_for('static', filename='scripts.js') }}"></script>
+</head>
+<body>
+    <header>
+        <h1>Welcome to MoodMap</h1>
+        <p>A brief description of MoodMap...</p>
+    </header>
+    <div id="emotion-container">
+        <div id="main-emotions">
+            <button class="emotion-btn" data-emotion="Angry">Angry</button>
+            <button class="emotion-btn" data-emotion="Sad">Sad</button>
+            <button class="emotion-btn" data-emotion="Anxious">Anxious</button>
+            <button class="emotion-btn" data-emotion="Hurt">Hurt</button>
+            <button class="emotion-btn" data-emotion="Embarrassed">Embarrassed</button>
+            <button class="emotion-btn" data-emotion="Happy">Happy</button>
+        </div>
+        <div id="sub-emotions" style="display:none;"></div>
+        <button id="submit-btn" style="display:none;">Submit</button>
+    </div>
+</body>
+</html>
+
+
