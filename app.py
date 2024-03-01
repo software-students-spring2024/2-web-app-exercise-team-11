@@ -30,8 +30,8 @@ def home():
     Route for the home page
     """
     if 'email' in session:
-        return render_template("index.html", logged_in=True)
-    return render_template("index.html", logged_in=False)
+        return render_template("landing.html", logged_in=True)
+    return render_template("landing.html", logged_in=False)
 
 
 @app.route('/sign_up')
