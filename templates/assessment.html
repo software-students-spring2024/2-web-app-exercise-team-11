@@ -1,38 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Assessment Page</title>
-    <link rel="stylesheet" type="text/css" href="../static/style.css">
+    <title>Assessment</title>
+    <link rel="stylesheet" type="text/css" href="../static/assessment.css"> 
 </head>
 <body>
-    <div class="container">
-        <h2>How Are You Feeling Right Now?</h2>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Angry</th>
-                    <th>Sad</th>
-                    <th>Anxious</th>
-                    <th>Hurt</th>
-                    <th>Embarrassed</th>
-                    <th>Happy</th>
-                </tr>
-            </thead>
-        </table>
-        
-        <form method="POST" action="">
-            <label for="How Are You Feeling Right Now?">Input:</label><br>
-            <input type="Input"><br>
-            <input type="submit" value="Submit">
-        </form>
-
-        
-    </div>
-    {% if error %}
-        <div class="error-message">{{ error }}</div>
-    {% endif %}
-
-
+    <h1>Assessment</h1>
+    <h2>How Are You Feeling?</h2>
+    <form method="POST" action="{{ url_for('assessment') }}">
+        <input type="text" id="main-emotion" name="main-emotion" placeholder="Main Emotion"/>
+        <input type="text" id="sub-emotion" name="sub-emotion" placeholder="Sub Emotion"/>
+        <br />
+        <textarea type="text" id="post-activity" name="post-activity" placeholder="What Did You Do After?"></textarea>
+        <br />
+        <input type="submit" value="Save" />
+    </form>
 </body>
 </html>

@@ -144,16 +144,18 @@ def assessment():
     """
     Route to input mood assessment
     """
+
     return render_template("assessment.html")
 
+    mainEmotion = request.form["main-emotion"]
+    subEmotion = request.form["sub-emotion"]
+    postActivity = request.form["post-activity"]
 
-## Based On Input From /assessment, assessment_further displays a different version of a template
-##@app.route('/assessment_further')
-##def assessment():
-    ##"""
-    ##Route to input mood assessment
-    ##"""
-    ##return redirect(url_for('assessment'))
+    doc = {"main-emotion": mainEmotion, "sub-emotion": subEmotion, "post-activity": postActivity, "created_at": datetime.datetime.utcnow()}
+    
+
+
+
 
 
 
