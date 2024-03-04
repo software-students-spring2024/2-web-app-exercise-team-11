@@ -15,8 +15,10 @@
             categorizes emotions into detailed subcategories, enabling users to monitor trends and foster personal growth on a daily and weekly basis.</p>
         <h2>Try it out below!</h2>
         <div id="account-actions">
-            <p>Already have an account?</p>
-            <a href="/sign_in" class="action-btn">Sign In</a>
+            {% if logged_in == False %}
+                <p>Already have an account?</p>
+                <a href="/sign_in" class="action-btn">Sign In</a>
+            {% endif %}
         </div>
 
     </header>
