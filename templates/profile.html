@@ -7,13 +7,15 @@
 <body>
     <div class="profile-container">
         <div class="profile-picture">
-            <!-- <img src="../images/profile.jpeg" alt="Profile Picture"> -->
+            <img src="../images/profile.jpeg" alt="Profile Picture">
         </div>
         <div class="profile-actions">
             <form action="/delete_profile" method="POST">
                 <button type="submit">Delete Account</button>
             </form>          
-            <button onclick="location.href='/change_password'">Change Password</button>
+            <form action="/change_password">
+                <button type="submit">Change Password</button>
+            </form> 
             <button onclick="location.href='/view_assessments'">View Old Assessment Results</button>
         </div>
     </div>
