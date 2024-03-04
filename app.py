@@ -116,6 +116,8 @@ def sign_up():
         "password": hashed, 
         "full_name": full_name
     })
+    session['email'] = email
+
 
     return redirect(url_for('assessment'))
 
