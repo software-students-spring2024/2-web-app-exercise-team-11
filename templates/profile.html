@@ -8,7 +8,6 @@
     <div class="profile-container">
         <h2>Welcome, {{ user.full_name }}</h2>
         <div class="profile-picture">
-            <!-- <img src="../images/profile.jpeg"> -->
         </div>
         <div class="profile-actions">
             <form action="/delete_profile" method="POST">
@@ -20,7 +19,9 @@
             <form action="/logout">
                 <button type="submit">Log Out</button>
             </form> 
-            <button onclick="location.href='/view_assessments'">View Old Assessment Results</button>
+            <form action="/assessments">
+                <button type="submit">View Assessments</button>
+            </form> 
         </div>
     </div>
 </body>
