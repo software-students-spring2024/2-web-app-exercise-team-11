@@ -2,7 +2,7 @@ import os
 import datetime
 from flask import Flask, render_template, request, redirect, url_for, jsonify, session
 import pymongo
-from pymongo.server_api import ServerApi
+# from pymongo.server_api import ServerApi
 import bcrypt
 from bson.objectid import ObjectId
 from dotenv import load_dotenv
@@ -13,9 +13,6 @@ load_dotenv()  # take environment variables from .env.
 # instantiate the app
 app = Flask(__name__)
 # bcrypt = Bcrypt(app) 
-
-
-
 
 
 # connect to the database
@@ -183,28 +180,27 @@ def change_pass():
         error_message = "User is not logged in."
         return render_template("login.html", error=error_message)
 
-    
-
-
-    
-
-
-
-
 @app.route('/assessment')
+def show_assessment():
+    """
+    Route for the sign up page
+    """
+    return render_template('assessment.html')    
+
+@app.route('/assessment', methods=["POST"])
 def assessment():
     """
     Route to input mood assessment
     """
-
-    return render_template("assessment.html")
-
+    # if 'email' in session:
+    user = db.users.find_one({"email": session['email']})
     mainEmotion = request.form["main-emotion"]
     subEmotion = request.form["sub-emotion"]
     postActivity = request.form["post-activity"]
 
     doc = {"main-emotion": mainEmotion, "sub-emotion": subEmotion, "post-activity": postActivity, "created_at": datetime.datetime.utcnow()}
-    
+    db._create_or_update_user
+    return redirect(url_for('profile'))
 
 
 
