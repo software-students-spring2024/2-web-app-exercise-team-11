@@ -187,7 +187,23 @@ def change_pass():
 
     
 
+@app.route("/assessments")
+def assessments():
+    """
+    Display user assessments
+    """
+    if 'email' in session:
+        email = session['email']
+        user = db.users.find_one({'email': email})
 
+        if user and 'assessments' in user:
+            return render_template("assessments.html", assessments=user['assessments'])
+        else:
+            error_message = "No assessments found."
+            return render_template("assessments.html", error=error_message)
+    else:
+        error_message = "User is not logged in."
+        return render_template("sign_in.html", error=error_message)
     
 
 
