@@ -2,6 +2,7 @@ import os
 import datetime
 from flask import Flask, render_template, request, redirect, url_for, jsonify, session
 import pymongo
+#from pymongo.server_api import ServerApi
 import bcrypt
 from bson.objectid import ObjectId
 from dotenv import load_dotenv
@@ -73,9 +74,12 @@ def sign_in():
             session['email'] = user['email']
             return redirect(url_for('assessment'))
         else:
-            return redirect(url_for('show_signin'))
+            error_message = "Wrong Pass."
+            return render_template("sign_in.html", error=error_message)
+
     else:
-        return redirect(url_for('show_signin'))
+        error_message = "Credentials not found."
+        return render_template("sign_in.html", error=error_message)
 
 
 
@@ -112,6 +116,8 @@ def sign_up():
         "password": hashed, 
         "full_name": full_name
     })
+    session['email'] = email
+
 
     return redirect(url_for('assessment'))
 
@@ -138,22 +144,118 @@ def delete_profile():
         return redirect(url_for('home'))
 
 
+@app.route("/change_password")
+def show_change_password():
+    """
+    Route for the change password page.
+    """
+    return render_template("change_password.html")
+
+@app.route("/change_pass", methods=['POST'])
+def change_pass(): 
+    """
+    Update the user password 
+    """
+
+    new_password = request.form['password']
+    confirm_password = request.form['confirm_password']
+
+    if not new_password or not confirm_password:
+        error_message = "Missing password or confirmation password."
+        return render_template("change_password.html", error=error_message)
+
+    if new_password != confirm_password:
+        error_message = "Passwords do not match."
+        return render_template("change_password.html", error=error_message)
+
+    if 'email' in session:
+        email = session['email']
+        user = db.users.find_one({'email': email})
+
+        if user:
+            hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt())
+
+            db.users.update_one({'email': email}, {'$set': {'password': hashed_password}})
+
+            return redirect(url_for('profile'))  
+        else:
+            error_message = "User not found."
+            return render_template("change_password.html", error=error_message)
+    else:
+        error_message = "User is not logged in."
+        return render_template("login.html", error=error_message)
+
+    
+
+@app.route("/assessments")
+def assessments():
+    """
+    Display user assessments
+    """
+    if 'email' in session:
+        email = session['email']
+        user = db.users.find_one({'email': email})
+
+        if user and 'assessments' in user:
+            return render_template("assessments.html", assessments=user['assessments'])
+        else:
+            error_message = "No assessments found."
+            return render_template("assessments.html", error=error_message)
+    else:
+        error_message = "User is not logged in."
+        return render_template("sign_in.html", error=error_message)
+    
+
 
 @app.route('/assessment')
+def show_assessment():
+    if 'email' in session:
+        return render_template("assessment.html")
+    return redirect(url_for('show_signin'))
+
+@app.route('/assessment', methods=['POST'])
 def assessment():
     """
     Route to input mood assessment
     """
-    return render_template("assessment.html")
+
+    if 'email' in session:
+        email = session['email']
+        user = db.users.find_one({'email': email})
+
+        if user:
+            main_emotion = request.form["main-emotion"]
+            sub_emotion = request.form["sub-emotion"]
+            post_activity = request.form["post-activity"]
+            current_date = datetime.datetime.now().strftime("%Y-%m-%d")
 
 
-## Based On Input From /assessment, assessment_further displays a different version of a template
-##@app.route('/assessment_further')
-##def assessment():
-    ##"""
-    ##Route to input mood assessment
-    ##"""
-    ##return redirect(url_for('assessment'))
+            if not main_emotion or not sub_emotion or not post_activity:
+                return render_template("assessment.html", error="Please enter all fields")
+
+            assessment_data = {
+                "mainEmotion": main_emotion,
+                "subEmotion": sub_emotion,
+                "postActivity": post_activity,
+                "currentDate": current_date
+            }
+
+            db.users.update_one(
+                {'email': email},
+                {'$push': {'assessments': assessment_data}}
+            )
+
+            return redirect(url_for('profile'))
+
+        else:
+            return "User not found."
+
+    
+    
+
+
+
+
 
 
 

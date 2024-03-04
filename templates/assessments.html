@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Assessments</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+        {% else %}
+            <h2>Previous User Assessments</h2>
+            <div class="list-group">
+                {% for assessment in assessments %}
+                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">{{ assessment.mainEmotion }}</h5>
+                            <small>{{assessment.currentDate }}</small>
+                        </div>
+                        <p class="mb-1">{{ assessment.subEmotion }}</p>
+                        <small>{{ assessment.postActivity }}</small>
+                    </a>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

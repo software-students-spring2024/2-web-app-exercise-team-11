@@ -1,0 +1,31 @@
+nav ul {
+    list-style-type: none; /* Removes the default list styling */
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Clears floats inside the list */
+}
+
+nav li {
+    float: left; /* Floats each list item to the left */
+}
+
+nav li a {
+    display: block; /* Changes the <a> elements to block-level, enabling padding */
+    text-align: center; /* Centers the text inside links */
+    padding: 14px 16px; /* Adds some padding around the links */
+    text-decoration: none; /* Removes the underline from links */
+}
+
+.nav-btn {
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    background-color: #256a28;
+    color: rgb(255, 255, 255);
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 5px;
+}

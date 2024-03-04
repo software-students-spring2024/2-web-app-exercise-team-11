@@ -3,18 +3,27 @@
 <head>
     <title>User Profile</title>
     <link rel="stylesheet" type="text/css" href="../static/profile.css"> 
+    <link rel="stylesheet" href="{{ url_for('static', filename='nav.css') }}">
 </head>
 <body>
     <div class="profile-container">
+        {% include 'nav_bar.html' %}
+        <h2>Welcome, {{ user.full_name }}</h2>
         <div class="profile-picture">
-            <!-- <img src="../images/profile.jpeg" alt="Profile Picture"> -->
         </div>
         <div class="profile-actions">
             <form action="/delete_profile" method="POST">
                 <button type="submit">Delete Account</button>
             </form>          
-            <button onclick="location.href='/change_password'">Change Password</button>
-            <button onclick="location.href='/view_assessments'">View Old Assessment Results</button>
+            <form action="/change_password">
+                <button type="submit">Change Password</button>
+            </form> 
+            <form action="/logout">
+                <button type="submit">Log Out</button>
+            </form> 
+            <form action="/assessments">
+                <button type="submit">View Assessments</button>
+            </form> 
         </div>
     </div>
 </body>

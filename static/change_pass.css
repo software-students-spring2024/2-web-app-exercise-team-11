@@ -1,4 +1,4 @@
-body {
+body{
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     display: flex;
@@ -8,42 +8,37 @@ body {
     margin: 0;
 }
 
-.profile-container {
+.password-form-container {
     text-align: center;
     background-color: #fff; 
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 60px;
-
+    width: 100%;
+    max-width: 400px;
 }
 
-.profile-picture {
-    background-color: #d9d9d9; 
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    display: inline-block;
-    line-height: 150px;
+.input-group {
     margin-bottom: 20px;
 }
 
-.profile-picture img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
+.input-field {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
 
-
-.profile-actions {
+.action-buttons {
     display: flex; 
     flex-direction: column; 
     align-items: center; 
     padding: 10px; 
 }
 
-.profile-actions button {
+.action-button {
     background-color: #4CAF50; 
     border: none;
     color: white; 
@@ -59,7 +54,7 @@ body {
     width: 80%;
 }
 
-.profile-actions button:hover {
+.action-button:hover {
     background-color: #45a049; 
     color: white;
 }
