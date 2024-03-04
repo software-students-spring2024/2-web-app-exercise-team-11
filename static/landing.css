@@ -15,10 +15,7 @@ header, .description {
     padding: 20px 0; 
 }
 
-.logo {
-    width: 300px !important;
-    height: auto !important;
-}
+
 
 .description {
     max-width: 400px;
