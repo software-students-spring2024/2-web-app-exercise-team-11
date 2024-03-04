@@ -18,6 +18,8 @@ nav li a {
 
 .nav-btn {
     display: inline-block;
+    justify-content: center;
+    align-items: center;
     background-color: #256a28;
     color: rgb(255, 255, 255);
     padding: 5px 10px;
