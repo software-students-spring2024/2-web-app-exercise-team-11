@@ -3,9 +3,11 @@
 <head>
     <title>Sign In Page!</title>
     <link rel="stylesheet" type="text/css" href="../static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='nav.css') }}">
 </head>
 <body>
     <div class="container">
+        {% include 'nav_bar.html' %}
         <h2>Sign In</h2>
         <form method="POST" action="{{ url_for('show_signin') }}">
             <label for="email">Email:</label><br>

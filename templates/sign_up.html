@@ -1,10 +1,11 @@
 <head>
     <title>Signup Page!</title>
     <link rel="stylesheet" type="text/css" href="../static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='nav.css') }}">
 </head>
 <div class="container">
-
-    <h2>Signup</h2>
+    {% include 'nav_bar.html' %}
+    <h2>Sign Up</h2>
     <form method="POST" action="{{ url_for('sign_up') }}">
         <label for="full_name">Full Name:</label><br>
         <input type="text" id="full_name" name="full_name"><br><br>

@@ -2,16 +2,12 @@
 <html>
 <head>
     <title>Assessment</title>
-<<<<<<< HEAD
-    <link rel="stylesheet" type="text/css" href="../static/assessment.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='nav.css') }}"> 
-=======
     <link rel="stylesheet" type="text/css" href="../static/style.css">
->>>>>>> main
+    <link rel="stylesheet" href="{{ url_for('static', filename='nav.css') }}">
 </head>
-{% include 'nav_bar.html' %}
 <body>
     <div class="container">
+        {% include 'nav_bar.html' %}
         <h1>Assessment</h1>
         <h2>How Are You Feeling?</h2>
         <form method="POST" action="{{ url_for('show_assessment') }}">

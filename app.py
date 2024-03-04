@@ -245,7 +245,7 @@ def assessment():
                 {'$push': {'assessments': assessment_data}}
             )
 
-            return "Assessment saved successfully."
+            return redirect(url_for('profile'))
 
         else:
             return "User not found."
