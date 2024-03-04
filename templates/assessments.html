@@ -13,7 +13,7 @@
                 {{ error }}
             </div>
         {% else %}
-            <h2>User Assessments</h2>
+            <h2>Previous User Assessments</h2>
             <div class="list-group">
                 {% for assessment in assessments %}
                     <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
@@ -21,8 +21,8 @@
                             <h5 class="mb-1">{{ assessment.mainEmotion }}</h5>
                             <small>{{assessment.currentDate }}</small>
                         </div>
-                        <p class="mb-1">{{ assessment.postActivity }}</p>
-                        <small>{{ assessment.subEmotion }}</small>
+                        <p class="mb-1">{{ assessment.subEmotion }}</p>
+                        <small>{{ assessment.postActivity }}</small>
                     </a>
                 {% endfor %}
             </div>
