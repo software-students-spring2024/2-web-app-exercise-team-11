@@ -209,8 +209,9 @@ def assessments():
 
 @app.route('/assessment')
 def show_assessment():
-    return render_template("assessment.html")
-
+    if 'email' in session:
+        return render_template("assessment.html")
+    return redirect(url_for('show_signin'))
 
 @app.route('/assessment', methods=['POST'])
 def assessment():

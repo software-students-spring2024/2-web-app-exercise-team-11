@@ -2,8 +2,10 @@
 <html>
 <head>
     <title>Assessment</title>
-    <link rel="stylesheet" type="text/css" href="../static/assessment.css"> 
+    <link rel="stylesheet" type="text/css" href="../static/assessment.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='nav.css') }}"> 
 </head>
+{% include 'nav_bar.html' %}
 <body>
     <h1>Assessment</h1>
     <h2>How Are You Feeling?</h2>
