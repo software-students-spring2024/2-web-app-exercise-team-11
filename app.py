@@ -202,35 +202,36 @@ def assessment():
     Route to input mood assessment
     """
 
-    ##if 'email' in session:
-    email = session['email']
-    user = db.users.find_one({'email': email})
+    if 'email' in session:
+        email = session['email']
+        user = db.users.find_one({'email': email})
 
-    if user:
-        main_emotion = request.form["main-emotion"]
-        sub_emotion = request.form["sub-emotion"]
-        post_activity = request.form["post-activity"]
-        current_date = datetime.datetime.now().strftime("%Y-%m-%d")
+        if user:
+            main_emotion = request.form["main-emotion"]
+            sub_emotion = request.form["sub-emotion"]
+            post_activity = request.form["post-activity"]
+            current_date = datetime.datetime.now().strftime("%Y-%m-%d")
 
 
-        if not main_emotion or not sub_emotion or not post_activity:
-            return render_template("assessment.html", error="Please enter all fields")
+            if not main_emotion or not sub_emotion or not post_activity:
+                return render_template("assessment.html", error="Please enter all fields")
 
-        assessment_data = {
-            "mainEmotion": main_emotion,
-            "subEmotion": sub_emotion,
-            "postActivity": post_activity,
-            "currentDate": current_date
-        }
+            assessment_data = {
+                "mainEmotion": main_emotion,
+                "subEmotion": sub_emotion,
+                "postActivity": post_activity,
+                "currentDate": current_date
+            }
 
-        db.users.update_one(
-            {'email': email},
-            {'$push': {'assessments': assessment_data}}
-        )
+            db.users.update_one(
+                {'email': email},
+                {'$push': {'assessments': assessment_data}}
+            )
 
-        return "Assessment saved successfully."
-    else:
-        return "User not found."
+            return "Assessment saved successfully."
+
+        else:
+            return "User not found."
 
     
     
