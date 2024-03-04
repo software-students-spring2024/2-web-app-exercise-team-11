@@ -2,7 +2,7 @@ import os
 import datetime
 from flask import Flask, render_template, request, redirect, url_for, jsonify, session
 import pymongo
-from pymongo.server_api import ServerApi
+#from pymongo.server_api import ServerApi
 import bcrypt
 from bson.objectid import ObjectId
 from dotenv import load_dotenv
@@ -189,21 +189,48 @@ def change_pass():
     
 
 
-
-
 @app.route('/assessment')
+def show_assessment():
+    return render_template("assessment.html")
+
+
+@app.route('/assessment', methods=['POST'])
 def assessment():
     """
     Route to input mood assessment
     """
 
-    return render_template("assessment.html")
+    ##if 'email' in session:
+    email = session['email']
+    user = db.users.find_one({'email': email})
 
-    mainEmotion = request.form["main-emotion"]
-    subEmotion = request.form["sub-emotion"]
-    postActivity = request.form["post-activity"]
+    if user:
+        main_emotion = request.form["main-emotion"]
+        sub_emotion = request.form["sub-emotion"]
+        post_activity = request.form["post-activity"]
+        current_date = datetime.datetime.now().strftime("%Y-%m-%d")
 
-    doc = {"main-emotion": mainEmotion, "sub-emotion": subEmotion, "post-activity": postActivity, "created_at": datetime.datetime.utcnow()}
+
+        if not main_emotion or not sub_emotion or not post_activity:
+            return render_template("assessment.html", error="Please enter all fields")
+
+        assessment_data = {
+            "mainEmotion": main_emotion,
+            "subEmotion": sub_emotion,
+            "postActivity": post_activity,
+            "currentDate": current_day
+        }
+
+        db.users.update_one(
+            {'email': email},
+            {'$push': {'assessments': assessment_data}}
+        )
+
+        return "Assessment saved successfully."
+    else:
+        return "User not found."
+
+    
     
 
 
