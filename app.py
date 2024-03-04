@@ -218,7 +218,7 @@ def assessment():
             "mainEmotion": main_emotion,
             "subEmotion": sub_emotion,
             "postActivity": post_activity,
-            "currentDate": current_day
+            "currentDate": current_date
         }
 
         db.users.update_one(
