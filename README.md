@@ -9,7 +9,7 @@
 
 ## Product vision statement
 
-MoodMap aims to create emotional awareness through a comprehensive tracker that categorizes emotions into detailed subcategories, enabling users to monitor trends and foster personal growth on a daily and weekly basis.
+MoodMap aims to create emotional awareness through a comprehensive tracker that categorizes emotions into detailed subcategories, enabling users to monitor trends and foster personal growth on a daily and weekly basis!
 
 ## User stories
 
